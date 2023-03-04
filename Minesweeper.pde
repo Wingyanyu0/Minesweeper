@@ -1,16 +1,14 @@
 import de.bezier.guido.*;
-//Declare and initialize constants NUM_ROWS and NUM_COLS = 20
-public final static int NUM_ROWS = 5; 
-public final static int NUM_COLS = 5;
+public final static int NUM_ROWS = 27; 
+public final static int NUM_COLS = 27;
 private MSButton[][] buttons; //2d array of minesweeper buttons
 private ArrayList <MSButton> mines; //ArrayList of just the minesweeper buttons that are mined
-
 void setup(){
-    size(500,500);
+    size(390,390);
     textAlign(CENTER,CENTER);
-    // make the manager
     Interactive.make(this);
     buttons = new MSButton[NUM_ROWS][NUM_COLS];
+    mines = new ArrayList<MSButton>();
     for(int r = 0; r < NUM_ROWS; r++){
     for(int c = 0; c < NUM_COLS; c++){
     buttons[r][c] = new MSButton(r,c);
@@ -18,8 +16,7 @@ void setup(){
     }
     setMines();
 }
-public void setMines()
-{
+public void setMines(){
     while(mines.size() < buttons.length){
     int r = (int)(Math.random()*NUM_ROWS);
     int c = (int)(Math.random()*NUM_COLS);
@@ -27,7 +24,7 @@ public void setMines()
     mines.add(buttons[r][c]);
     System.out.println(r+","+c);
     }
-    }
+    } 
 }
 public void draw(){
     background(0);
@@ -63,21 +60,21 @@ public int countMines(int row, int col){
     int numMines = 0;
     for(int r = 0; r < row; r++){
     for(int c = 0; c < col; c++){
-    if(isValid(r,c-1) == true && mines.contains(buttons[r][c-1]));
+    if(isValid(r,c-1) == true && mines.contains(buttons[r][c-1]))
     numMines++;
-    if(isValid(r-1,c-1) == true && mines.contains(buttons[r-1][c-1]));
+    if(isValid(r-1,c-1) == true && mines.contains(buttons[r-1][c-1]))
     numMines++;
-    if(isValid(r+1,c-1) == true && mines.contains(buttons[r+1][c-1]));
+    if(isValid(r+1,c-1) == true && mines.contains(buttons[r+1][c-1]))
     numMines++;
-    if(isValid(r+1,c+1) == true && mines.contains(buttons[r+1][c+1]));
+    if(isValid(r+1,c+1) == true && mines.contains(buttons[r+1][c-+1]))
     numMines++;
-    if(isValid(r-1,c+1) == true && mines.contains(buttons[r-1][c+1]));
+    if(isValid(r-1,c+1) == true && mines.contains(buttons[r-1][c+1]))
     numMines++;
-    if(isValid(r,c+1) == true && mines.contains(buttons[r][c+1]));
+    if(isValid(r,c+1) == true && mines.contains(buttons[r][c+1]))
     numMines++;
-    if(isValid(r-1,c) == true && mines.contains(buttons[r-1][c]));
+    if(isValid(r-1,c) == true && mines.contains(buttons[r-1][c]))
     numMines++;
-    if(isValid(r+1,c) == true && mines.contains(buttons[r+1][c]));
+    if(isValid(r+1,c) == true && mines.contains(buttons[r+1][c]))
     numMines++;
     }
     }
@@ -99,7 +96,6 @@ public MSButton (int row, int col){
         flagged = clicked = false;
         Interactive.add(this); // register it with the manager
     }
-
     // called by manager
 public void mousePressed(){
     clicked = true;
@@ -112,7 +108,7 @@ public void mousePressed(){
     else if(countMines(myRow, myCol) > 0)
     setLabel(countMines(myRow, myCol));
     else
-    mousePressed();
+    buttons[myRow][myCol].mousePressed();
     
 }
 public void draw(){    
