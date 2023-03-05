@@ -1,10 +1,10 @@
 import de.bezier.guido.*;
-public final static int NUM_ROWS = 27; 
-public final static int NUM_COLS = 27;
+public final static int NUM_ROWS = 20; 
+public final static int NUM_COLS = 20;
 private MSButton[][] buttons; //2d array of minesweeper buttons
 private ArrayList <MSButton> mines; //ArrayList of just the minesweeper buttons that are mined
 void setup(){
-    size(390,390);
+    size(400,400);
     textAlign(CENTER,CENTER);
     Interactive.make(this);
     buttons = new MSButton[NUM_ROWS][NUM_COLS];
@@ -102,14 +102,28 @@ public void mousePressed(){
     if(mouseButton == RIGHT)
     flagged = true;
     if(flagged == false)
-    clicked = false;
+    clicked = true;
     else if(mines.contains(this))
     displayLosingMessage();
     else if(countMines(myRow, myCol) > 0)
-    setLabel(countMines(myRow, myCol));
+    setLabel(countMines(myRow,myCol));
     else
-    buttons[myRow][myCol].mousePressed();
-    
+    if(isValid(myRow,myCol-1) == true && clicked)
+    buttons[myRow][myCol-1].mousePressed();
+    if(isValid(myRow-1,myCol-1) == true && clicked)
+    buttons[myRow-1][myCol-1].mousePressed(); 
+    if(isValid(myRow+1,myCol-1) == true && clicked)
+    buttons[myRow+1][myCol-1].mousePressed(); 
+    if(isValid(myRow+1,myCol) == true && clicked)
+    buttons[myRow+1][myCol].mousePressed(); 
+    if(isValid(myRow-1,myCol+1) == true && clicked)
+    buttons[myRow-1][myCol+1].mousePressed(); 
+    if(isValid(myRow+1,myCol) == true && clicked)
+    buttons[myRow+1][myCol].mousePressed();  
+    if(isValid(myRow,myCol) == true && clicked)
+    buttons[myRow][myCol].mousePressed(); 
+    if(isValid(myRow-1,myCol) == true && clicked)
+    buttons[myRow-1][myCol].mousePressed(); 
 }
 public void draw(){    
         if (flagged)
