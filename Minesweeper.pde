@@ -98,11 +98,11 @@ public MSButton (int row, int col){
     }
     // called by manager
 public void mousePressed(){
-    clicked = true;
-    if(mouseButton == RIGHT)
+    if(mouseButton == RIGHT && flagged == true)
+    flagged = false;
+    clicked = false;
+    if(mouseButton == RIGHT && flagged == false)
     flagged = true;
-    if(flagged == false)
-    clicked = true;
     else if(mines.contains(this))
     displayLosingMessage();
     else if(countMines(myRow, myCol) > 0)
