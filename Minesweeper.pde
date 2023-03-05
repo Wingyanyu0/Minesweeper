@@ -66,7 +66,7 @@ public int countMines(int row, int col){
     numMines++;
     if(isValid(r+1,c-1) == true && mines.contains(buttons[r+1][c-1]))
     numMines++;
-    if(isValid(r+1,c+1) == true && mines.contains(buttons[r+1][c-+1]))
+    if(isValid(r+1,c+1) == true && mines.contains(buttons[r+1][c+1]))
     numMines++;
     if(isValid(r-1,c+1) == true && mines.contains(buttons[r-1][c+1]))
     numMines++;
