@@ -2,7 +2,7 @@ import de.bezier.guido.*;
 public final static int NUM_ROWS = 20; 
 public final static int NUM_COLS = 20;
 private MSButton[][] buttons; //2d array of minesweeper buttons
-private ArrayList <MSButton> mines; //ArrayList of just the minesweeper buttons that are mined
+private ArrayList<MSButton>mines; //ArrayList of just the minesweeper buttons that are mined
 void setup(){
     size(400,400);
     textAlign(CENTER,CENTER);
@@ -38,6 +38,8 @@ public boolean isWon(){
     for(int c = 0; c < NUM_COLS; c++){
     if(mines.contains(buttons[r][c]) && buttons[r][c].isFlagged() == true)
     countr++;
+    else if(buttons[r][c].clicked == true)
+    countc++;
     }
     }
     if(countr == mines.size() && countc == ((NUM_ROWS*NUM_COLS) - mines.size()))
@@ -58,8 +60,8 @@ public boolean isValid(int r, int c){
 }
 public int countMines(int row, int col){
     int numMines = 0;
-    for(int r = 0; r < row; r++){
-    for(int c = 0; c < col; c++){
+    for(int r = row; r < row+1; r++){
+    for(int c = col; c < col+1; c++){
     if(isValid(r,c-1) == true && mines.contains(buttons[r][c-1]))
     numMines++;
     if(isValid(r-1,c-1) == true && mines.contains(buttons[r-1][c-1]))
@@ -108,21 +110,21 @@ public void mousePressed(){
     else if(countMines(myRow, myCol) > 0)
     setLabel(countMines(myRow,myCol));
     else
-    if(isValid(myRow,myCol-1) == true && clicked)
+    if(isValid(myRow,myCol-1) == true && buttons[myRow][myCol-1].clicked == true)
     buttons[myRow][myCol-1].mousePressed();
-    if(isValid(myRow-1,myCol-1) == true && clicked)
+    if(isValid(myRow-1,myCol-1) == true && buttons[myRow-1][myCol-1].clicked == true)
     buttons[myRow-1][myCol-1].mousePressed(); 
-    if(isValid(myRow+1,myCol-1) == true && clicked)
+    if(isValid(myRow+1,myCol-1) == true && buttons[myRow+1][myCol-1].clicked == true)
     buttons[myRow+1][myCol-1].mousePressed(); 
-    if(isValid(myRow+1,myCol) == true && clicked)
+    if(isValid(myRow+1,myCol) == true && buttons[myRow+1][myCol].clicked == true)
     buttons[myRow+1][myCol].mousePressed(); 
-    if(isValid(myRow-1,myCol+1) == true && clicked)
+    if(isValid(myRow-1,myCol+1) == true && buttons[myRow-1][myCol+1].clicked == true)
     buttons[myRow-1][myCol+1].mousePressed(); 
-    if(isValid(myRow+1,myCol) == true && clicked)
+    if(isValid(myRow+1,myCol) == true && buttons[myRow+1][myCol].clicked == true)
     buttons[myRow+1][myCol].mousePressed();  
-    if(isValid(myRow,myCol) == true && clicked)
+    if(isValid(myRow,myCol) == true && buttons[myRow][myCol].clicked == true)
     buttons[myRow][myCol].mousePressed(); 
-    if(isValid(myRow-1,myCol) == true && clicked)
+    if(isValid(myRow-1,myCol) == true && buttons[myRow-1][myCol].clicked == true)
     buttons[myRow-1][myCol].mousePressed(); 
 }
 public void draw(){    
