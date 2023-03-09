@@ -1,8 +1,9 @@
 import de.bezier.guido.*;
 public final static int NUM_ROWS = 20; 
 public final static int NUM_COLS = 20;
+private boolean gameOver = false;
 private MSButton[][] buttons; //2d array of minesweeper buttons
-private ArrayList <MSButton> mines; //ArrayList of just the minesweeper buttons that are mined
+private ArrayList<MSButton>mines; //ArrayList of just the minesweeper buttons that are mined
 void setup(){
     size(400,400);
     textAlign(CENTER,CENTER);
@@ -27,7 +28,7 @@ public void setMines(){
 }
 public void draw(){
     background(0);
-    if(isWon() == true)
+    if(isWon() == true && !gameOver)
     displayWinningMessage();
 }
 public boolean isWon(){ 
@@ -35,7 +36,7 @@ public boolean isWon(){
     int countc = 0;
     for(int r = 0; r < NUM_ROWS; r++){
     for(int c = 0; c < NUM_COLS; c++){
-    if(mines.contains(buttons[r][c]) && buttons[r][c].isFlagged() == true)
+    if(mines.contains(buttons[r][c]) && !buttons[r][c].clicked)
     countr++;
     else if(buttons[r][c].clicked == true)
     countc++;
@@ -78,8 +79,8 @@ public boolean isValid(int r, int c){
 }
 public int countMines(int row, int col){
     int numMines = 0;
-    for(int r = row; r < row+1; r++){
-    for(int c = col; c < col+1; c++){
+    for(int r = row; r <= row+1; r++){
+    for(int c = col; c <= col+1; c++){
     if(isValid(r,c-1) == true && mines.contains(buttons[r][c-1]))
     numMines++;
     if(isValid(r-1,c-1) == true && mines.contains(buttons[r-1][c-1]))
@@ -119,14 +120,12 @@ public MSButton (int row, int col){
     // called by manager
 public void mousePressed(){
     clicked = true;
-    if(mouseButton == RIGHT && flagged == true){
-    flagged = false;
+    if(mouseButton == RIGHT){
+    flagged = !flagged;
+    if(!flagged)
     clicked = false;
     }
-    if(mouseButton == RIGHT && flagged == false){
-    flagged = true;
-    }
-    if(mines.contains(this))
+    else if(mines.contains(this))
     displayLosingMessage();
     else if(countMines(myRow, myCol) > 0)
     setLabel(countMines(myRow,myCol));
